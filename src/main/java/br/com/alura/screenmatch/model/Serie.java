@@ -1,5 +1,7 @@
 package br.com.alura.screenmatch.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.OptionalDouble;
 
 import br.com.alura.screenmatch.service.ConsultaChatGPT;
@@ -11,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "series")
@@ -34,6 +37,9 @@ public class Serie {
 	private String poster;
 	
 	private String sinopse;
+	
+	@Transient
+	private List<Episodio> episodios = new ArrayList<Episodio>();
 
 	public Serie(DadosSerie dadosSerie) {
 		this.titulo = dadosSerie.titulo();
@@ -76,6 +82,10 @@ public class Serie {
 
 	public String getSinopse() {
 		return sinopse;
+	}
+
+	public List<Episodio> getEpisodios() {
+		return episodios;
 	}
 
 	@Override
