@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.OptionalDouble;
 
 import br.com.alura.screenmatch.service.ConsultaChatGPT;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -39,7 +40,7 @@ public class Serie {
 	
 	private String sinopse;
 	
-	@OneToMany(mappedBy = "serie")
+	@OneToMany(mappedBy = "serie", cascade = CascadeType.ALL)
 	private List<Episodio> episodios = new ArrayList<Episodio>();
 
 	protected Serie() { }
@@ -89,6 +90,11 @@ public class Serie {
 
 	public List<Episodio> getEpisodios() {
 		return episodios;
+	}
+	
+	public void setEpisodios(List<Episodio> episodios) {
+		episodios.forEach(e -> e.setSerie(this));
+		this.episodios = episodios;
 	}
 
 	@Override
